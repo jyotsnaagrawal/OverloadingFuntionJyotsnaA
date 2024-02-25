@@ -13,36 +13,40 @@ fun main() {
     }
 }
 
-// Method for residential customers
-fun getResidentialCustomerInfo() {
-    // Prompt the user to enter residential customer information
-    println("Enter your name:")
+// Overloaded method for both residential and business customers
+fun getCustomerInfo(isBusiness: Boolean = false) {
+    // Prompt the user to enter customer information
+    println("Enter your ${if (isBusiness) "business" else "residential"} name:")
     val name = readlnOrNull()
+
+    // For business customers, prompt for the contact name
+    val contactName = if (isBusiness) {
+        println("Enter your contact name:")
+        readlnOrNull()
+    } else {
+        null
+    }
 
     println("Enter your phone number:")
     val phoneNumber = readlnOrNull()
 
-    // Display residential customer information
-    println("Residential Customer Information:")
+    // Display customer information
+    println("${if (isBusiness) "Business" else "Residential"} Customer Information:")
     println("Name: $name")
+    if (isBusiness) {
+        println("Contact Name: $contactName")
+    }
     println("Phone Number: $phoneNumber")
 }
 
-// Method for business customers
+// Function for backward compatibility
+fun getResidentialCustomerInfo() {
+    // Delegate to the new overloaded function
+    getCustomerInfo()
+}
+
+// Function for backward compatibility
 fun getBusinessCustomerInfo() {
-    // Prompt the user to enter business customer information
-    println("Enter your business name:")
-    val businessName = readlnOrNull()
-
-    println("Enter your contact name:")
-    val contactName = readlnOrNull()
-
-    println("Enter your phone number:")
-    val phoneNumber = readlnOrNull()
-
-    // Display business customer information
-    println("Business Customer Information:")
-    println("Business Name: $businessName")
-    println("Contact Name: $contactName")
-    println("Phone Number: $phoneNumber")
+    // Delegate to the new overloaded function
+    getCustomerInfo(isBusiness = true)
 }
